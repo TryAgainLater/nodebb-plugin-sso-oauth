@@ -47,8 +47,8 @@
 	 */
 
 	const constants = Object.freeze({
-		type: '',	// Either 'oauth' or 'oauth2'
-		name: '',	// Something unique to your OAuth provider in lowercase, like "github", or "nodebb"
+		type: 'oauth2',	// Either 'oauth' or 'oauth2'
+		name: 'luceo',	// Something unique to your OAuth provider in lowercase, like "github", or "nodebb"
 		oauth: {
 			requestTokenURL: '',
 			accessTokenURL: '',
@@ -57,12 +57,13 @@
 			consumerSecret: nconf.get('oauth:secret'),	// don't change this line
 		},
 		oauth2: {
-			authorizationURL: '',
-			tokenURL: '',
+			authorizationURL: nconf.get('oauth:authorizationURL'),
+			tokenURL: nconf.get('oauth:tokenURL'),
 			clientID: nconf.get('oauth:id'),	// don't change this line
-			clientSecret: nconf.get('oauth:secret'),	// don't change this line
+			clientSecret: nconf.get('oauth:secret'),	// don't change this line,
 		},
-		userRoute: '',	// This is the address to your app's "user profile" API endpoint (expects JSON)
+		userRoute: nconf.get('oauth:userRoute'),	// This is the address to your app's "user profile" API endpoint (expects JSON),
+		scope: nconf.get('oauth:scope'),
 	});
 
 	const OAuth = {};
@@ -114,6 +115,7 @@
 				opts.callbackURL = nconf.get('url') + '/auth/' + constants.name + '/callback';
 
 				passportOAuth.Strategy.prototype.userProfile = function (accessToken, done) {
+					this._oauth2._useAuthorizationHeaderForGET = true;
 					this._oauth2.get(constants.userRoute, accessToken, function (err, body/* , res */) {
 						if (err) {
 							return done(err);
@@ -172,19 +174,19 @@
 		// Everything else is optional.
 
 		// Find out what is available by uncommenting this line:
-		// console.log(data);
+		// console.log({ data });
 
 		var profile = {};
 		profile.id = data.id;
-		profile.displayName = data.name;
-		profile.emails = [{ value: data.email }];
+		profile.displayName = data.User_Name;
+		profile.emails = [{ value: data.Email }];
 
 		// Do you want to automatically make somebody an admin? This line might help you do that...
 		// profile.isAdmin = data.isAdmin ? true : false;
 
 		// Delete or comment out the next TWO (2) lines when you are ready to proceed
-		process.stdout.write('===\nAt this point, you\'ll need to customise the above section to id, displayName, and emails into the "profile" object.\n===');
-		return callback(new Error('Congrats! So far so good -- please see server log for details'));
+		// process.stdout.write('===\nAt this point, you\'ll need to customise the above section to id, displayName, and emails into the "profile" object.\n===');
+		// return callback(new Error('Congrats! So far so good -- please see server log for details'));
 
 		// eslint-disable-next-line
 		callback(null, profile);

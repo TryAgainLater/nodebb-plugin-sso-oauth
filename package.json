@@ -1,11 +1,11 @@
 {
-  "name": "nodebb-plugin-sso-oauth",
+  "name": "nodebb-plugin-sso-oauth-luceo",
   "version": "0.3.4",
-  "description": "NodeBB Generic OAuth SSO",
+  "description": "NodeBB Generic OAuth SSO Via LuceoSports",
   "main": "library.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/julianlam/nodebb-plugin-sso-oauth"
+    "url": "https://github.com/TryAgainLater/nodebb-plugin-sso-oauth"
   },
   "keywords": [
     "nodebb",
@@ -18,8 +18,8 @@
     "registration"
   ],
   "author": {
-    "name": "Julian Lam",
-    "email": "julian@nodebb.org"
+    "name": "Alexei Boyko",
+    "email": "boyko@itirra.com"
   },
   "license": "MIT",
   "bugs": {
