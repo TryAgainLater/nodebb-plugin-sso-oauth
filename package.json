@@ -1,6 +1,6 @@
 {
   "name": "nodebb-plugin-sso-oauth-luceo",
-  "version": "0.3.4",
+  "version": "0.4.1",
   "description": "NodeBB Generic OAuth SSO Via LuceoSports",
   "main": "library.js",
   "repository": {
